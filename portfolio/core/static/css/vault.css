@@ -1,0 +1,50 @@
+#adminMenuWrapper {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    z-index: 100;
+}
+
+#profileIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+#profileIcon img {
+    width: 100%;
+    height: 100%;
+}
+
+#adminMenu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    display: none;
+}
+
+#adminMenu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#adminMenu ul li {
+    padding: 8px 12px;
+}
+
+#adminMenu ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+#adminMenu ul li:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

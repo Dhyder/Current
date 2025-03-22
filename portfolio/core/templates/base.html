@@ -11,11 +11,12 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vault.css' %}">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/logos/v.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/logos/v.ico' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/logos/v.ico' %}">
     <link rel="manifest" href="{% static 'site.webmanifest' %}">
 </head>
 
@@ -43,7 +44,7 @@
             <div class="row wide main-nav-wrap">
                 <nav class="column lg-12 main-nav">
                     <ul>
-                        <li><a href="/" class="home-link">Victor. W</a></li>
+                        <li><a href="/" class="home-link"><i></i></a></li>
                         <li class="current"><a href="#intro" class="smoothscroll">Intro</a></li>
                         <li><a href="#about" class="smoothscroll">About</a></li>
                         <li><a href="#works" class="smoothscroll">Works</a></li>
@@ -71,8 +72,23 @@
     </footer>
 </div>
 
+<div id="adminMenuWrapper">
+    <div id="profileIcon" onmousedown="startHold()" onmouseup="endHold()" onmouseleave="endHold()">
+        <span>•</span><span>•</span><span>•</span>
+    </div>
+    <div id="adminMenu" class="hidden">
+        <ul>
+            <li><a href="{% url 'admin:index' %}">Manage Page</a></li>
+            <li><a href="{% url 'settings' %}">Settings</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+</div>
+
+
 <!-- JS -->
 <script src="{% static 'js/plugins.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/vault.js' %}"></script>
 </body>
 </html>
