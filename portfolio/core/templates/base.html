@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html class="no-js ss-preload" lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
@@ -38,13 +39,16 @@
         <!-- Header -->
         <header class="s-header">
             <div class="header-mobile">
-                <span class="mobile-home-link"><a href="index.html">Victor. W</a></span>
+                <span class="mobile-home-link"><a href="/">Victor. W</a></span>
                 <a class="mobile-menu-toggle" href="#0"><span>Menu</span></a>
             </div>
             <div class="row wide main-nav-wrap">
                 <nav class="column lg-12 main-nav">
                     <ul>
-                        <li><a href="/" class="home-link"><i></i></a></li>
+                        <li><a href="/" class="home-link ">
+                                <img src="{% static 'images/logos/wc.ico' %}" alt="Homepage">
+                            </a>
+                        </li>
                         <li class="current"><a href="#intro" class="smoothscroll">Intro</a></li>
                         <li><a href="#about" class="smoothscroll">About</a></li>
                         <li><a href="#works" class="smoothscroll">Works</a></li>
@@ -53,42 +57,53 @@
                 </nav>
             </div>
         </header>
-    {% block content %}
+        {% block content %}
         <!-- Your page content goes here -->
-    {% endblock %}
+        {% endblock %}
 
-    <footer class="s-footer">
-        <div class="row">
-            <div class="column ss-copyright">
-                <span>&copy; Copyright Victor. W 2025</span>
-                <span>Design by <a href="https://victorwachira.vercel.app/">VickyShiraa</a> Design By <a href="https://muse&mural.com">Muse&Mural</a></span>
+        <footer class="s-footer">
+            <div class="row">
+                <div class="column ss-copyright">
+                    <span>&copy; Copyright Victor. W 2025</span>
+                    <span>Design by <a href="https://victorwachira.vercel.app/">VickyShiraa</a> Design By <a
+                            href="https://muse&mural.com">Muse&Mural</a></span>
+                </div>
+                <div class="ss-go-top">
+                    <a class="smoothscroll" title="Back to Top" href="#top">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill-rule="evenodd"
+                            clip-rule="evenodd">
+                            <path
+                                d="M11 2.206l-6.235 7.528-.765-.645 7.521-9 7.479 9-.764.646-6.236-7.53v21.884h-1v-21.883z" />
+                            </svg>
+                    </a>
+                </div>
             </div>
-            <div class="ss-go-top">
-                <a class="smoothscroll" title="Back to Top" href="#top">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill-rule="evenodd" clip-rule="evenodd"><path d="M11 2.206l-6.235 7.528-.765-.645 7.521-9 7.479 9-.764.646-6.236-7.53v21.884h-1v-21.883z"/></svg>
-                </a>
-            </div>
+        </footer>
+    </div>
+
+    <div id="adminMenuWrapper">
+        <div id="profileIcon" onmousedown="startHold()" onmouseup="endHold()" onmouseleave="endHold()">
+            <span>•</span><span>•</span><span>•</span>
         </div>
-    </footer>
-</div>
-
-<div id="adminMenuWrapper">
-    <div id="profileIcon" onmousedown="startHold()" onmouseup="endHold()" onmouseleave="endHold()">
-        <span>•</span><span>•</span><span>•</span>
+        <div id="adminMenu" class="hidden">
+            <ul>
+                <li><a href="{% url 'admin:index' %}">Manage Page</a></li>
+                <li><a href="{% url 'settings' %}">Settings</a></li>
+                <li><form method="post" action="{% url 'logout' %}" id="logoutForm" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div id="adminMenu" class="hidden">
-        <ul>
-            <li><a href="{% url 'admin:index' %}">Manage Page</a></li>
-            <li><a href="{% url 'settings' %}">Settings</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
-        </ul>
-    </div>
-</div>
 
 
-<!-- JS -->
-<script src="{% static 'js/plugins.js' %}"></script>
-<script src="{% static 'js/main.js' %}"></script>
-<script src="{% static 'js/vault.js' %}"></script>
+    <!-- JS -->
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/vault.js' %}"></script>
+    <script src="{% static 'js/auth.js' %}"></script>
 </body>
+
 </html>

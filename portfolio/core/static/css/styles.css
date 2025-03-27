@@ -3007,9 +3007,41 @@ img.u-pull-left {
     border-right : none;
 }
 
+.main-nav li:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--header-height); /* Match navbar height */
+    overflow: hidden;
+    position: relative;
+}
+
+.main-nav li:first-child a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+}
+
+.main-nav li:first-child img {
+    display: block;
+    height: auto;
+    max-height: 247%; /* Ensures it doesn't exceed li height */
+    width: auto;
+    max-width: 247%; /* Prevents unwanted stretching */
+    object-fit: contain; /* Keeps aspect ratio */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Perfectly centers */
+}
+
+
 /* --------------------------------------------------------------------
  * ## mobile menu toggle
  * -------------------------------------------------------------------- */
+ 
 .mobile-menu-toggle {
     display  : block;
     width    : var(--header-height);
@@ -4248,4 +4280,18 @@ img.u-pull-left {
     .ss-go-top {
         right : 6vw;
     }
+}
+
+
+@media (max-width: 800) {  
+    .login-image {
+        display: none; /* Hides the image on smaller screens */
+    }
+}
+.hashira {
+    padding: 200px 10px; /* Adds space above and below */
+    /* text-align: right; */
+}
+.hashira2{
+    
 }

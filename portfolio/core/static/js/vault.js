@@ -9,3 +9,11 @@ function startHold() {
 function endHold() {
     clearTimeout(holdTimer);
 }
+
+function cacheProjects(projects) {
+    localStorage.setItem("projects", JSON.stringify(projects));
+}
+
+function getCachedProjects() {
+    return JSON.parse(localStorage.getItem("projects"));
+}

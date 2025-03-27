@@ -31,3 +31,4 @@ Thumbs.db
 # Migrations (optional, keep if you want fresh migrations)
 **/migrations/*.py
 !**/migrations/__init__.py
+start.sh

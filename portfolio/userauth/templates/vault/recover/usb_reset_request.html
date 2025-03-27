@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>USB Key Verification</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label for="usb_key">Enter USB Key:</label>
+    <input type="text" name="usb_key" required>
+    <button type="submit">Verify</button>
+</form>
+{% endblock %}

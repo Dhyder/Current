@@ -1,8 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Admin Dashboard</h2>
-<p>Welcome, {{ user.username }}!</p>
+
+<!-- Display Messages -->
+{% if success_message %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            showMessage("{{ success_message }}", "success");
+        });
+    </script>
+{% endif %}
+
 <a href="{% url 'manage' %}">Manage Projects</a> | 
 <a href="{% url 'settings' %}">Settings</a> | 
-<a href="{% url 'logout' %}">Logout</a>
+<form method="post" action="{% url 'logout' %}" id="logoutForm" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
 {% endblock %}

@@ -1,10 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
-<a href="{% url 'recover' %}">Forgot password?</a>
+{% load static %}
+<div class="login-container">
+    <div class='login-container hashira'>
+        <div class="row">
+    
+            <!-- Login Form Section -->
+            <div class="column lg-6 tab-12 login-box">
+                <h3 class="u-add-bottom">Login</h3>
+                {% if messages %}
+                {% for message in messages %}
+                    <div class="alert-box 
+                        {% if message.tags == 'error' %}alert-box--error{% elif message.tags == 'success' %}alert-box--success{% elif message.tags == 'info' %}alert-box--info{% elif message.tags == 'warning' %}alert-box--notice{% endif %}">
+                        <p>{{ message }}</p>
+                        <span class="alert-box__close"></span>
+                    </div>
+                {% endfor %}
+                {% endif %}
+                <form method="post" class="login-form">
+                    {% csrf_token %}
+                    <div>
+                        <label for="id_username">Username or Email</label>
+                        <input class="u-fullwidth" type="text" name="username" id="id_username" placeholder="Enter your username or email" required>
+                    </div>
+                    <div>
+                        <label for="id_password">Password</label>
+                        <input class="u-fullwidth" type="password" name="password" id="id_password" placeholder="Enter your password" required>
+                    </div>
+                    <input class="btn--primary u-fullwidth" type="submit" value="Login">
+                </form>
+    
+                <a href="{% url 'recover' %}" class="forgot-password">Forgot password?</a>
+            </div>
+             <!-- Image/Design Section -->
+             <div class="column lg-6 tab-12">
+                <div class="login-image">
+                    <img src="{% static 'images/auth/login2.png' %}" alt="Login Illustration">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
 {% endblock %}

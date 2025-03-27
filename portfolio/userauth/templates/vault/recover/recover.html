@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Password Recovery</h2>
+    <p>Select a recovery method:</p>
+
+    <a href="{% url 'password_reset' %}" class="btn btn-primary">Reset via Email</a>
+    
+    <a href="{% url 'usb_reset_request' %}" class="btn btn-secondary">Use USB Key</a>
+
+    <!-- Placeholder for future methods -->
+    <a href="#" class="btn btn-outline-info disabled">More coming soon...</a>
+    {% if messages %}
+    {% for message in messages %}
+        <p style="color: red;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+{% endblock %}
