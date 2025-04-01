@@ -1,10 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>USB Key Verification</h2>
-<form method="POST">
-    {% csrf_token %}
-    <label for="usb_key">Enter USB Key:</label>
-    <input type="text" name="usb_key" required>
-    <button type="submit">Verify</button>
-</form>
+{% load static %}
+<div class="login-container">
+    <div class='login-container hashira'>
+        <div class="row">
+    
+            <!-- Login Form Section -->
+            <div class="column lg-6 tab-12 login-box">
+                <h2>USB Key Verification</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <label for="usb_key">Enter USB Key:</label>
+                    <input type="text" name="usb_key" required>
+                    <button type="submit">Verify</button>
+                </form>
+            </div>
+             <!-- Image/Design Section -->
+             <div class="column lg-6 tab-12">
+                <div class="login-image">
+                    <img src="{% static 'images/auth/login2.png' %}" alt="Login Illustration">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
 {% endblock %}

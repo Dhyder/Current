@@ -4292,6 +4292,110 @@ img.u-pull-left {
     padding: 200px 10px; /* Adds space above and below */
     /* text-align: right; */
 }
-.hashira2{
-    
+
+.hashira2 {
+    padding: 80px 10px; /* Adds space above and below */
+    /* text-align: right; */
+}
+
+.pgn ul {
+    display: flex; /* Ensures horizontal alignment */
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 8px; /* Adds spacing between items */
+}
+
+.pgn ul li {
+    display: inline-block; /* Prevents vertical stacking */
+}
+
+.pgn__num,
+.pgn__prev,
+.pgn__next {
+    display: inline-flex; /* Ensures items stay inline */
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    text-decoration: none;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 4px;
+}
+
+.pgn__num.current {
+    font-weight: bold;
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 300px; /* Adjust as needed */
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px 12px 8px 35px; /* Space for icon */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-container svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    fill: #888; /* Adjust color */
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #2c2c2c;
+    color: white;
+    padding: 8px 15px;
+    border-radius:0px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.upload-btn:hover {
+    background: #1d1d1d;
+}
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.cookie-banner p {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.cookie-banner .btn {
+    margin-left: 15px;
+    flex-shrink: 0;
 }

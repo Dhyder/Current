@@ -1,6 +1,257 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Manage Projects</h2>
-<p>Add, edit, or delete your projects.</p>
-<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% load static %}
+
+<div class="hashira2">
+    <div class="row">
+        <!-- Form Section -->
+        <div class="column lg-6 tab-12" style="flex: 1; min-width: 300px;">
+            <h2>New Project</h2>
+
+            <!-- Success Message -->
+            <div id="success-message" class="hidden"></div>
+
+            {% if form %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Row 1: Title & Project URL -->
+                <div class="row">
+                    <div class="column lg-6">
+                        <label for="id_title">Title</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="column lg-6">
+                        <label for="id_project_url">Project URL</label>
+                        {{ form.project_url }}
+                    </div>
+                </div>
+
+                <!-- Row 2: Technologies & Image -->
+                <div class="row">
+                    <div class="column lg-6">
+                        <label for="id_technologies">Technologies</label>
+                        {{ form.technologies }}
+                    </div>
+                    <div class="column lg-6">
+                        <label for="id_image">Image</label>
+                        <div class="custom-file-upload" style="display: flex; align-items: center;">
+                            <label class="upload-btn" for="id_image"
+                                style="display: flex; align-items: center; gap: 5px;">
+                                <i class="material-icons">cloud_upload</i> Upload Image
+                            </label>
+                            {{ form.image }}
+                            <img id="image-preview" src="" alt="Preview"
+                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 40px; display: none; margin-left: 5px; margin-top: 14px;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: Description (Full Width) -->
+                <div class="row">
+                    <div class="column lg-12">
+                        <label for="id_description">Description</label>
+                        {{ form.description }}
+                    </div>
+                </div>
+
+                <!-- Row 4: Create Button -->
+                <button type="submit">Create Project</button>
+            </form>
+            {% else %}
+            <p>Error loading form. Please check your settings.</p>
+            {% endif %}
+        </div>
+
+        <!-- Project List Section -->
+        <div class="column lg-6 lg-12" style="flex: 1; min-width: 300px;">
+            <h3>Projects</h3>
+            <p>Use the search bar to find specific projects.</p>
+
+            <div style="position: relative; width: 100%;">
+                <input type="text" id="searchInput" placeholder="Search projects..."
+                    style="width: 100%; padding-left: 35px;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; fill: #888;">
+                    <path
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-1.06 1.06l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
+                </svg>
+            </div>
+
+            <form id="bulkDeleteForm" method="post" action="{% url 'bulk_delete_projects' %}">
+                {% csrf_token %}
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAll"></th>
+                                <th>Image</th>
+                                <th>Date</th>
+                                <th>Title</th>
+                                <th>Technologies</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectTable">
+                            {% if projects %}
+                            {% for project in projects %}
+                            <tr class="project-row">
+                                <td>
+                                    <input type="checkbox" name="project_ids" value="{{ project.id }}"
+                                        class="select-checkbox">
+                                </td>
+                                <td>
+                                    <a href="{% url 'edit_project' project.id %}" class="icon edit-icon" title="Edit">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if project.image %}
+                                    <img src="{{ project.image.url }}" alt="{{ project.title }}"
+                                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                    {% else %}
+                                    <span>No Image</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ project.created_at|date:"F Y" }}</td>
+                                <td>{{ project.title }}</td>
+                                <td>{{ project.technologies|truncatechars:20 }}</td>
+                                <td>{{ project.description|truncatechars:10 }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 20px;">No projects found.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <button type="submit" id="bulkDeleteBtn"
+                    style="margin-top: 10px; background: red; color: white; border: none; padding: 5px 10px; cursor: pointer;">
+                    <i class="material-icons">delete</i> Bulk Delete
+                </button>
+            </form>
+
+            <!-- Custom Pagination -->
+            <nav class="pgn" id="paginationContainer">
+                <ul>
+                    <li><a class="pgn__prev" href="#0" id="prevPage"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24">
+                                <path
+                                    d="M12.707 17.293L8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z" />
+                            </svg></a></li>
+                    <span id="paginationNumbers"></span>
+                    <li><a class="pgn__next" href="#0" id="nextPage"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24">
+                                <path
+                                    d="M11.293 17.293l1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z" />
+                            </svg></a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </div> <!-- end row -->
+
+
+</div>
+
+<script>
+    document.getElementById('selectAll').addEventListener('click', function () {
+        let checkboxes = document.querySelectorAll('.select-checkbox');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const imageInput = document.getElementById("id_image");
+        const imagePreview = document.getElementById("image-preview");
+
+        imageInput.addEventListener("change", function () {
+            if (imageInput.files && imageInput.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                imagePreview.style.display = "none";
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const projectRows = Array.from(document.querySelectorAll(".project-row"));
+        const paginationContainer = document.getElementById("paginationContainer");
+        const paginationNumbers = document.getElementById("paginationNumbers");
+        const prevPageBtn = document.getElementById("prevPage");
+        const nextPageBtn = document.getElementById("nextPage");
+
+        let rowsPerPage = 5;
+        let currentPage = 1;
+        let filteredRows = [...projectRows];
+
+        function updatePagination() {
+            let totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+            paginationNumbers.innerHTML = "";
+
+            for (let i = 1; i <= totalPages; i++) {
+                let pageItem = document.createElement("li");
+                pageItem.innerHTML =
+                    `<a class="pgn__num ${i === currentPage ? 'current' : ''}" href="#0">${i}</a>`;
+                pageItem.addEventListener("click", function () {
+                    currentPage = i;
+                    showPage();
+                });
+                paginationNumbers.appendChild(pageItem);
+            }
+
+            prevPageBtn.parentElement.style.display = (currentPage === 1) ? "none" : "inline-block";
+            nextPageBtn.parentElement.style.display = (currentPage === totalPages || totalPages === 0) ?
+                "none" : "inline-block";
+        }
+
+        function showPage() {
+            let start = (currentPage - 1) * rowsPerPage;
+            let end = start + rowsPerPage;
+
+            projectRows.forEach(row => row.style.display = "none");
+            filteredRows.slice(start, end).forEach(row => row.style.display = "");
+
+            updatePagination();
+        }
+
+        function filterProjects() {
+            let searchValue = searchInput.value.toLowerCase();
+            filteredRows = projectRows.filter(row => {
+                let title = row.cells[2].textContent.toLowerCase();
+                let description = row.cells[3].textContent.toLowerCase();
+                return title.includes(searchValue) || description.includes(searchValue);
+            });
+
+            currentPage = 1;
+            showPage();
+        }
+
+        searchInput.addEventListener("keyup", filterProjects);
+        prevPageBtn.addEventListener("click", function () {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage();
+            }
+        });
+
+        nextPageBtn.addEventListener("click", function () {
+            let totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage();
+            }
+        });
+
+        showPage();
+    });
+</script>
+
 {% endblock %}

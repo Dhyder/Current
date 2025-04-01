@@ -13,12 +13,14 @@
     <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/vault.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/logos/v.ico' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/logos/v.ico' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/logos/v.ico' %}">
     <link rel="manifest" href="{% static 'site.webmanifest' %}">
+
 </head>
 
 <body id="top">
@@ -87,7 +89,7 @@
         </div>
         <div id="adminMenu" class="hidden">
             <ul>
-                <li><a href="{% url 'admin:index' %}">Manage Page</a></li>
+                <li><a href="{% url 'manage_projects' %}">Manage Page</a></li>
                 <li><a href="{% url 'settings' %}">Settings</a></li>
                 <li><form method="post" action="{% url 'logout' %}" id="logoutForm" style="display: inline;">
                     {% csrf_token %}

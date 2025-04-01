@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
+
 <div class="login-container">
     <div class='login-container hashira'>
         <div class="row">
@@ -17,7 +18,7 @@
                     </div>
                 {% endfor %}
                 {% endif %}
-                <form method="post" class="login-form">
+                <form method="post" class="login-form ajax-form" action="{% url 'login' %}">
                     {% csrf_token %}
                     <div>
                         <label for="id_username">Username or Email</label>
@@ -27,6 +28,7 @@
                         <label for="id_password">Password</label>
                         <input class="u-fullwidth" type="password" name="password" id="id_password" placeholder="Enter your password" required>
                     </div>
+                    <input type="hidden" name="next" value="{{ next }}">
                     <input class="btn--primary u-fullwidth" type="submit" value="Login">
                 </form>
     

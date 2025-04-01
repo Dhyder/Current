@@ -17,3 +17,4 @@ function cacheProjects(projects) {
 function getCachedProjects() {
     return JSON.parse(localStorage.getItem("projects"));
 }
+

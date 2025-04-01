@@ -8,7 +8,10 @@
         ==================================================- -->
 <main class="s-content">
 
-
+    <div id="cookie-banner" class="cookie-banner">
+        <p>This site uses cookies to enhance your experience <button id="cookie-btn" class='btn btn--small btn--primary' onclick="acceptCookies()">Accept</button></p>
+    </div>
+    
     <!-- ### intro
             ================================================== -->
     <section id="intro" class="s-intro target-section">
@@ -223,22 +226,25 @@
                     <li class="folio-list__item column" data-animate-el>
                         <a class="folio-list__item-link" href="#modal-{{ project.id }}">
                             <div class="folio-list__item-pic">
-                                <img src="{{ project.image.url }}"
-                                    srcset="{{ project.image.url }} 1x, {{ project.image.url }} 2x"
-                                    alt="{{ project.title }}">
+                                {% if project.image %}
+                                    <img src="{{ project.image.url }}"
+                                        srcset="{{ project.image.url }} 1x, {{ project.image.url }} 2x"
+                                        alt="{{ project.title }}">
+                                {% else %}
+                                    <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+                                {% endif %}
                             </div>
-
+                
                             <div class="folio-list__item-text">
                                 <div class="folio-list__item-cat">
                                     {{ project.created_at|date:"F Y" }}
-                                    <!-- Preserves class -->
                                 </div>
                                 <div class="folio-list__item-title">
                                     {{ project.title }}
-                                    <!-- Injecting title inside correct class -->
                                 </div>
                             </div>
                         </a>
+                
                         {% if project.project_url %}
                         <a class="folio-list__proj-link" href="{{ project.project_url }}" title="project link">
                             <svg width="15" height="15" viewBox="0 0 15 15" fill="none"
@@ -250,17 +256,20 @@
                         </a>
                         {% endif %}
                     </li> <!-- end folio-list__item -->
-
+                
                     <!-- Modal for each project -->
                     <div id="modal-{{ project.id }}" hidden>
                         <div class="modal-popup">
-                            <img src="{{ project.image.url }}" alt="{{ project.title }}">
-
+                            {% if project.image %}
+                                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                            {% else %}
+                                <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+                            {% endif %}
+                
                             <div class="modal-popup__desc">
                                 <h5>{{ project.title }}</h5>
                                 <p>{{ project.description | truncatechars:150}}
                                     {% if project.description|length > 150 %}
-                                    {% comment %} <span class="read-more">Read More</span>c {% endcomment %}
                                     <a href="{% url 'projects' %}" class="read-more">Read More</a>
                                     {% endif %}
                                 </p>
@@ -270,7 +279,7 @@
                                     {% endfor %}
                                 </ul>
                             </div>
-
+                
                             {% if project.project_url %}
                             <a href="{{ project.project_url }}" class="modal-popup__details">Project link</a>
                             {% endif %}
@@ -278,7 +287,7 @@
                     </div> <!-- end modal -->
                     {% endfor %}
                 </ul> <!-- end folio-list -->
-
+                
 
             </div> <!-- end column -->
 

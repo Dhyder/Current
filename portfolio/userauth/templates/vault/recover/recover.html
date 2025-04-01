@@ -1,18 +1,35 @@
 {% extends "base.html" %}
-
 {% block content %}
-    <h2>Password Recovery</h2>
-    <p>Select a recovery method:</p>
-
-    <a href="{% url 'password_reset' %}" class="btn btn-primary">Reset via Email</a>
+{% load static %}
+<div class="login-container">
+    <div class='login-container hashira'>
+        <div class="row">
     
-    <a href="{% url 'usb_reset_request' %}" class="btn btn-secondary">Use USB Key</a>
-
-    <!-- Placeholder for future methods -->
-    <a href="#" class="btn btn-outline-info disabled">More coming soon...</a>
-    {% if messages %}
-    {% for message in messages %}
-        <p style="color: red;">{{ message }}</p>
-    {% endfor %}
-{% endif %}
+            <!-- Login Form Section -->
+            <div class="column lg-6 tab-12 login-box">
+                <h2>Password Recovery</h2>
+                <p>Select a recovery method:</p>
+            
+                <a href="{% url 'password_reset' %}" class="btn btn-primary">Reset via Email</a>
+                
+                <a href="{% url 'usb_reset_request' %}" class="btn btn-secondary">Use USB Key</a>
+            
+                <!-- Placeholder for future methods -->
+                <a href="#" class="btn btn-outline-info disabled">More coming soon...</a>
+                {% if messages %}
+                {% for message in messages %}
+                    <p style="color: red;">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+            </div>
+             <!-- Image/Design Section -->
+             <div class="column lg-6 tab-12">
+                <div class="login-image">
+                    <img src="{% static 'images/auth/login2.png' %}" alt="Login Illustration">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
 {% endblock %}

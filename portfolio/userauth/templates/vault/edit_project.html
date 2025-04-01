@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+
+<div class="hashira2">
+    <div class="row">
+        <!-- Form Section -->
+        <div class="column lg-6 tab-12" style="flex: 1; min-width: 300px;">
+
+            <h2>Edit Project</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Save Changes</button>
+            </form>
+            <a href="{% url 'manage_projects' %}">Cancel</a>
+        </div>
+
+    </div> <!-- end row -->
+
+
+</div>
+{% endblock %}

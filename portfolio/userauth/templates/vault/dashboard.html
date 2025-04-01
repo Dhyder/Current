@@ -1,20 +1,65 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Admin Dashboard</h2>
+{% load static %}
 
-<!-- Display Messages -->
-{% if success_message %}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            showMessage("{{ success_message }}", "success");
-        });
-    </script>
-{% endif %}
+    <div class='login-container hashira2'>
+        <div class="row">
 
-<a href="{% url 'manage' %}">Manage Projects</a> | 
-<a href="{% url 'settings' %}">Settings</a> | 
-<form method="post" action="{% url 'logout' %}" id="logoutForm" style="display: inline;">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+            <div class="column lg-6 tab-12">
+                <h2>Admin Dashboard</h2>
+
+                <!-- Analytics Section -->
+                <div class="analytics">
+                    <h3>Analytics</h3>
+                    <p>Page Visits: {{ analytics_data.page_visits }}</p>
+                    <h4>Recent Changes</h4>
+                    <ul>
+                        {% for change in analytics_data.recent_changes %}
+                        <li>{{ change }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="column lg-6 tab-12">
+
+                <!-- Blog Management Section -->
+                <div class="blog-management">
+                    <h3>Manage Blogs</h3>
+
+                    <!-- Blog Form -->
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ blog_form.as_p }}
+                        <button type="submit">Create Blog</button>
+                    </form>
+
+                    <!-- Blog List -->
+                    <ul>
+                        {% for blog in blogs %}
+                        <li>
+                            <strong>{{ blog.title }}</strong> - {{ blog.category }} ({{ blog.timestamp }})
+                            <a href="{% url 'edit_blog' blog.id %}">Edit</a> |
+                            <a href="{% url 'delete_blog' blog.id %}"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Links and Logout -->
+                <div class="dashboard-links">
+                    <a href="{% url 'manage_projects' %}">Manage Projects</a> |
+                    <a href="{% url 'settings' %}">Settings</a> |
+                    <form method="post" action="{% url 'logout' %}" id="logoutForm" class="ajax-form"
+                        style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
 {% endblock %}

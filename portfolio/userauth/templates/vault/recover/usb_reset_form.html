@@ -1,15 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Set New Password</h2>
-<form method="POST">
-    {% csrf_token %}
-    <label for="password">New Password:</label>
-    <input type="password" name="password" required>
+{% load static %}
+<div class="login-container">
+    <div class='login-container hashira'>
+        <div class="row">
 
-    <label for="confirm_password">Confirm Password:</label>
-    <input type="password" name="confirm_password" required>
+            <!-- Login Form Section -->
+            <div class="column lg-6 tab-12 login-box">
+                <h2>Set New Password</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <label for="password">New Password:</label>
+                    <input type="password" name="password" required>
 
-    <button type="submit">Reset Password</button>
-</form>
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" name="confirm_password" required>
+
+                    <button type="submit">Reset Password</button>
+                </form>
+            </div>
+            <!-- Image/Design Section -->
+            <div class="column lg-6 tab-12">
+                <div class="login-image">
+                    <img src="{% static 'images/auth/login2.png' %}" alt="Login Illustration">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}

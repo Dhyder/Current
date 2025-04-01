@@ -1,19 +1,36 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h2>USB Key Setup</h2>
+{% load static %}
+<div class="login-container">
+    <div class='login-container hashira'>
+        <div class="row">
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+            <!-- Login Form Section -->
+            <div class="column lg-6 tab-12 login-box">
+                <h2>USB Key Setup</h2>
 
-<form action="{% url 'update_usb_key' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Generate USB Key</button>
-</form>
+                {% if messages %}
+                {% if success_message %}
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        showMessage("{{ success_message }}", "success");
+                    });
+                </script>
+            {% endif %}
+                {% endif %}
 
+                <form action="{% url 'update_usb_key' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Generate USB Key</button>
+                </form>
+            </div>
+            <!-- Image/Design Section -->
+            <div class="column lg-6 tab-12">
+                <div class="login-image">
+                    <img src="{% static 'images/auth/login2.png' %}" alt="Login Illustration">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
